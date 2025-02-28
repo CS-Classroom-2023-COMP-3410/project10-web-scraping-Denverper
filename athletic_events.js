@@ -9,10 +9,11 @@ async function scrapeAthleticEvents() {
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
 
-    const scriptContent = $('section[aria-labelledby="h2_scoreboard"] script').first().html();
+    //find the script that dynamically loads all the HTML conetnt for the carosel 
+    const scriptContent = $('section[aria-labelledby="h2_scoreboard"] script').first().html(); 
 
     if (scriptContent) {
-      const jsonStringMatch = scriptContent.match(/var obj = (.*?);\s*if/);
+      const jsonStringMatch = scriptContent.match(/var obj = (.*?);\s*if/); // make it into json compatible data
 
       if (jsonStringMatch && jsonStringMatch[1]) {
         const jsonString = jsonStringMatch[1];
